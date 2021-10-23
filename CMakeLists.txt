@@ -4,6 +4,15 @@ project(vtkTeem)
 cmake_minimum_required(VERSION 3.13.4)
 #-----------------------------------------------------------------------------
 
+set(VTK_SRC ${CMAKE_SOURCE_DIR}/../slicer-build/VTK)
+set(VTK_DIR ${CMAKE_SOURCE_DIR}/../slicer-build/VTK-build)
+set(ITK_SRC ${CMAKE_SOURCE_DIR}/../slicer-build/ITK)
+set(ITK_DIR ${CMAKE_SOURCE_DIR}/../slicer-build/ITK-build)
+set(Teem_SRC T:/Slicer-build/teem)
+set(Teem_DIR T:/Slicer-build/teem-build)
+
+
+
 # --------------------------------------------------------------------------
 # Options
 # --------------------------------------------------------------------------
@@ -111,15 +120,16 @@ target_include_directories(${PROJECT_NAME}
     $<INSTALL_INTERFACE:include/${PROJECT_NAME}>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
     $<BUILD_INTERFACE:${Teem_INCLUDE_DIRS}>
+    $<BUILD_INTERFACE:${VTK_INCLUDE_DIRS}>
+    $<BUILD_INTERFACE:${ITK_INCLUDE_DIRS}>
    
     PRIVATE
     $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
-    $<BUILD_INTERFACE:${VTK_INCLUDE_DIRS}>
-    $<BUILD_INTERFACE:${ITK_INCLUDE_DIRS}>
+
     )
 
 message("teem: " ${Teem_INCLUDE_DIRS})
-message("vtk: " ${VTK_INCLUDE_DIRS})
+message("vtk: " ${Teem_LIBRARY_DIRS})
 
 # Apply user-defined properties to the library target.
 #if(Slicer_LIBRARY_PROPERTIES)
@@ -178,7 +188,7 @@ include(CMakePackageConfigHelpers)
 #    ${CMAKE_BINARY_DIR}/${PROJECT_NAME}Config.cmake
 #    @ONLY
 #)
-set(INSTALL_HEAD_FILES vtkDiffusionTensorGlyph.h)
+file(GLOB INSTALL_HEAD_FILES ${PROJECT_SOURCE_DIR}/*.h)
 install(FILES ${INSTALL_HEAD_FILES}
         DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}
         )
