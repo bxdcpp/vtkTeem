@@ -152,6 +152,7 @@ endif()
 configure_file(
   ${CMAKE_CURRENT_SOURCE_DIR}/vtkTeemConfig.cmake.in
   ${CMAKE_CURRENT_BINARY_DIR}/vtkTeemConfig.cmake
+  @ONLY
   )
 
 
@@ -188,7 +189,7 @@ include(CMakePackageConfigHelpers)
 #    ${CMAKE_BINARY_DIR}/${PROJECT_NAME}Config.cmake
 #    @ONLY
 #)
-file(GLOB INSTALL_HEAD_FILES ${PROJECT_SOURCE_DIR}/*.h)
+file(GLOB INSTALL_HEAD_FILES ${PROJECT_SOURCE_DIR}/*.h ${CMAKE_BINARY_DIR}/*h)
 install(FILES ${INSTALL_HEAD_FILES}
         DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}
         )
@@ -254,3 +255,5 @@ endif()
 # --------------------------------------------------------------------------
 set(${PROJECT_NAME}_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}
   CACHE INTERNAL "${PROJECT_NAME} include dirs" FORCE)
+
+  message("PROJECT_BIN_DIR:" ${PROJECT_BIN_DIR})
